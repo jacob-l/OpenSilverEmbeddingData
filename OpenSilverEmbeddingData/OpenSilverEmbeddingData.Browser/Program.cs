@@ -1,29 +1,13 @@
 ﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-
-namespace SuperDuper
-{
-    [AttributeUsage(AttributeTargets.Assembly)]
-    public class BuildDateTimeAttribute : Attribute
-    {
-        public string Date { get; set; }
-        public string MachineName { get; set; }
-        public string CommitHash { get; set; }
-
-        public BuildDateTimeAttribute(string date, string machineName, string commitHash)
-        {
-            Date = date;
-            MachineName = machineName;
-            CommitHash = commitHash;
-        }
-    }
-}
 
 namespace OpenSilverEmbeddingData.Browser
 {
@@ -42,17 +26,24 @@ namespace OpenSilverEmbeddingData.Browser
 
         private static string GetAssemblyBuildInfo()
         {
+            var listOfAttributeKeys = new HashSet<string> { "SourceRevisionId", "BuildDate", "MachineName" };
+
             var sb = new StringBuilder();
-            var assembly = Assembly.GetExecutingAssembly();
-            var attr = Attribute.GetCustomAttribute(assembly, typeof(SuperDuper.BuildDateTimeAttribute)) as SuperDuper.BuildDateTimeAttribute;
-            if (attr == null)
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            foreach (var assembly in assemblies)
             {
-                return sb.ToString();
+                var attributes = Attribute.GetCustomAttributes(assembly, typeof(AssemblyMetadataAttribute))
+                    .OfType<AssemblyMetadataAttribute>().Where(a => listOfAttributeKeys.Contains(a.Key)).ToList();
+                if (attributes.Any())
+                {
+                    sb.AppendLine(assembly.FullName + ":");
+                }
+                foreach (var att in attributes)
+                {
+                    sb.AppendLine(att.Key + " - " + att.Value);
+                }
             }
 
-            sb.AppendLine("Build date - " + attr.Date);
-            sb.AppendLine("Machine name - " + attr.MachineName);
-            sb.AppendLine("Commit Hash - " + attr.CommitHash);
 
             return sb.ToString();
         }
