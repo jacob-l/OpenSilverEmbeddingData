@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <NoXamlPreprocessor>True</NoXamlPreprocessor>
+    <OpenSilverType>4</OpenSilverType>
+    <PublishTrimmed>true</PublishTrimmed>
+    <!-- Uncomment to enable AOT compilation when publishing -->
+    <!--<RunAOTCompilation>true</RunAOTCompilation>-->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
+    <PackageReference Include="OpenSilver" Version="1.0.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+     <DisableImplicitNamespaceImports>True</DisableImplicitNamespaceImports>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\OpenSilverEmbeddingData\OpenSilverEmbeddingData.csproj" />
+  </ItemGroup>
+
+  <Target Name="SetSourceRevisionId" BeforeTargets="InitializeSourceControlInformation">
+    <Exec
+        Command="git describe --long --always --dirty --exclude=* --abbrev=8"
+        ConsoleToMSBuild="True"
+        IgnoreExitCode="False"
+    >
+        <Output PropertyName="SourceRevisionId" TaskParameter="ConsoleOutput"/>
+    </Exec>
+  </Target>
+
+  <ItemGroup>
+    <AssemblyAttribute Include="SuperDuper.BuildDateTime">
+      <_Parameter1>$([System.DateTime]::Now.ToString("s"))</_Parameter1>
+      <_Parameter2>$([System.Environment]::MachineName)</_Parameter2>
+      <_Parameter3>$(SourceRevisionId)</_Parameter3>
+    </AssemblyAttribute>
+  </ItemGroup>
+
+</Project>
