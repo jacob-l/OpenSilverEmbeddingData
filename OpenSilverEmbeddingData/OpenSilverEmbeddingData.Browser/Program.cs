@@ -52,8 +52,6 @@ namespace OpenSilverEmbeddingData.Browser
         {
             Application.RunApplication(() =>
             {
-                Console.WriteLine(GetAssemblyBuildInfo());
-
                 var app = new OpenSilverEmbeddingData.App();
             });
         }
