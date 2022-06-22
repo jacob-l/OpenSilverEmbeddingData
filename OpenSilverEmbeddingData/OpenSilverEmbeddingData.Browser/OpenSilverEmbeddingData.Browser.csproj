@@ -5,6 +5,7 @@
     <NoXamlPreprocessor>True</NoXamlPreprocessor>
     <OpenSilverType>4</OpenSilverType>
     <PublishTrimmed>true</PublishTrimmed>
+    <EnableAdditionalMetadataAttributes>True</EnableAdditionalMetadataAttributes>
     <!-- Uncomment to enable AOT compilation when publishing -->
     <!--<RunAOTCompilation>true</RunAOTCompilation>-->
   </PropertyGroup>
@@ -12,7 +13,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.0" PrivateAssets="all" />
-    <PackageReference Include="OpenSilver" Version="1.0.0" />
+    <PackageReference Include="OpenSilver" Version="1.0.0-private-2022-06-21-084912-adb11736" />
   </ItemGroup>
 
   <PropertyGroup>

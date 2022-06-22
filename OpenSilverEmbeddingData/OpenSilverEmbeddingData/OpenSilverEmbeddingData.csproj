@@ -4,10 +4,11 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <EnableDefaultItems>false</EnableDefaultItems>
 	<DefineSilverlight>true</DefineSilverlight>
+      <EnableAdditionalMetadataAttributes>true</EnableAdditionalMetadataAttributes>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OpenSilver" Version="1.0.0" />
+    <PackageReference Include="OpenSilver" Version="1.0.0-private-2022-06-21-084912-adb11736" />
   </ItemGroup>
 
   <ItemGroup>
